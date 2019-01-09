@@ -43,12 +43,6 @@ public class Cell {
         return new Cell(this.coordinateX + 1, this.coordinateY +1);
     }
 
-    private boolean hasCoordinates(int queryXCoordinate, int queryYCoordinate) {
-        if ((this.coordinateX == queryXCoordinate) && (this.coordinateY == queryYCoordinate))
-            return true;
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
