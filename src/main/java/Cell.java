@@ -1,4 +1,54 @@
+import java.util.List;
+import java.util.Objects;
+
 public class Cell {
+    private final int coordinateX;
+    private final int coordinateY;
+
     public Cell(int coordinateX, int coordinateY) {
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
+    }
+
+    public boolean hasRightNeighbour(List<Cell> livingCells) {
+        int rightSideXCoordinate = this.coordinateX + 1;
+        int rightSideYCoordinate = this.coordinateY;
+
+        for (Cell c : livingCells) {
+            if (c.hasCoordinates(rightSideXCoordinate, rightSideYCoordinate))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasLeftNeighbour(List<Cell> livingCells) {
+        int leftSideXCoordinate = this.coordinateX - 1;
+        int leftSideYCoordinate = this.coordinateY;
+
+        for (Cell c : livingCells) {
+            if (c.hasCoordinates(leftSideXCoordinate, leftSideYCoordinate))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean hasCoordinates(int queryXCoordinate, int queryYCoordinate) {
+        if ((this.coordinateX == queryXCoordinate) && (this.coordinateY == queryYCoordinate))
+            return true;
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return coordinateX == cell.coordinateX &&
+                coordinateY == cell.coordinateY;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordinateX, coordinateY);
     }
 }
