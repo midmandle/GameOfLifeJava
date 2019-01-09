@@ -4,23 +4,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static junit.framework.TestCase.assertEquals;
 
 @RunWith(JUnitParamsRunner.class)
 public class OneLivingCellTests {
     @Test
     @Parameters(method = "cellValues")
-    public void seeding_one_living_cell_returns_no_living_cells(Cell ...cells) {
+    public void seeding_one_living_cell_returns_no_living_cells(List<Cell> seedCells) {
         GameOfLife gameOfLife = new GameOfLife();
-        ArrayList<Cell> seedCells = new ArrayList<Cell>();
-        assertEquals(new ArrayList<Cell>(), gameOfLife.runCycle(seedCells));
+        assertEquals(new ArrayList<Cell>(), gameOfLife.runCycle( seedCells));
     }
 
     private Object[] cellValues() {
         return new Object[] {
-                new Object[]{new Cell(0, 0)},
+                new Object[]{asList(new Cell(0, 0))},
         };
     }
 }

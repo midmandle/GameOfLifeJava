@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameOfLife {
-    public ArrayList<Cell> runCycle(ArrayList<Cell> seedCells) {
+    public List<Cell> runCycle(List<Cell> seedCells) {
         return new ArrayList<Cell>();
     }
 }
