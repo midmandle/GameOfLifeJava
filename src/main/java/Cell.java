@@ -10,92 +10,37 @@ public class Cell {
         this.coordinateY = coordinateY;
     }
 
-    public boolean hasRightNeighbour(List<Cell> livingCells) {
-        int rightSideXCoordinate = this.coordinateX + 1;
-        int rightSideYCoordinate = this.coordinateY;
 
-        for (Cell c : livingCells) {
-            if (c.hasCoordinates(rightSideXCoordinate, rightSideYCoordinate))
-                return true;
-        }
-        return false;
+    public Cell determineLeftNeighbour() {
+        return new Cell(this.coordinateX -1, this.coordinateY);
     }
 
-    public boolean hasLeftNeighbour(List<Cell> livingCells) {
-        int leftSideXCoordinate = this.coordinateX - 1;
-        int leftSideYCoordinate = this.coordinateY;
-
-        for (Cell c : livingCells) {
-            if (c.hasCoordinates(leftSideXCoordinate, leftSideYCoordinate))
-                return true;
-        }
-        return false;
+    public Cell determineRightNeighbour(){
+        return new Cell(this.coordinateX +1, this.coordinateY);
     }
 
-    public boolean hasTopNeighbour(List<Cell> livingCells) {
-        int topSideXCoordinate = this.coordinateX;
-        int topSideYCoordinate = this.coordinateY + 1;
-
-        for (Cell c : livingCells) {
-            if (c.hasCoordinates(topSideXCoordinate, topSideYCoordinate))
-                return true;
-        }
-        return false;
+    public Cell determineBottomNeighbour(){
+        return new Cell(this.coordinateX, this.coordinateY-1);
     }
 
-    public boolean hasBottomNeighbour(List<Cell> livingCells) {
-        int bottomSideXCoordinate = this.coordinateX;
-        int bottomSideYCoordinate = this.coordinateY - 1;
-
-        for (Cell c : livingCells) {
-            if (c.hasCoordinates(bottomSideXCoordinate, bottomSideYCoordinate))
-                return true;
-        }
-        return false;
+    public Cell determineTopNeighbour() {
+        return new Cell(this.coordinateX, this.coordinateY+1);
     }
 
-    public boolean hasTopRightNeighbour(List<Cell> livingCells) {
-        int topRightCornerXCoordinate = this.coordinateX + 1;
-        int topRightCornerYCoordinate = this.coordinateY + 1;
-
-        for (Cell c : livingCells) {
-            if (c.hasCoordinates(topRightCornerXCoordinate, topRightCornerYCoordinate))
-                return true;
-        }
-        return false;
+    public Cell determineBottomLeftNeighbour() {
+        return new Cell(this.coordinateX -1, this.coordinateY -1);
     }
 
-    public boolean hasBottomLeftNeighbour(List<Cell> livingCells) {
-        int bottomLeftCornerXCoordinate = this.coordinateX - 1;
-        int bottomLeftCornerYCoordinate = this.coordinateY - 1;
-
-        for (Cell c : livingCells) {
-            if (c.hasCoordinates(bottomLeftCornerXCoordinate, bottomLeftCornerYCoordinate))
-                return true;
-        }
-        return false;
+    public Cell determineBottomRightNeighbour() {
+        return new Cell(this.coordinateX +1, this.coordinateY -1);
     }
 
-    public boolean hasTopLeftNeighbour(List<Cell> livingCells) {
-        int topLeftCornerXCoordinate = this.coordinateX - 1;
-        int topLeftCornerYCoordinate = this.coordinateY + 1;
-
-        for (Cell c : livingCells) {
-            if (c.hasCoordinates(topLeftCornerXCoordinate, topLeftCornerYCoordinate))
-                return true;
-        }
-        return false;
+    public Cell determineTopLeftNeighbour() {
+        return new Cell(this.coordinateX -1, this.coordinateY +1);
     }
 
-    public boolean hasBottomRightNeighbour(List<Cell> livingCells) {
-        int bottomRightCornerXCoordinate = this.coordinateX + 1;
-        int bottomRightCornerYCoordinate = this.coordinateY - 1;
-
-        for (Cell c : livingCells) {
-            if (c.hasCoordinates(bottomRightCornerXCoordinate, bottomRightCornerYCoordinate))
-                return true;
-        }
-        return false;
+    public Cell determineTopRightNeighbour() {
+        return new Cell(this.coordinateX + 1, this.coordinateY +1);
     }
 
     private boolean hasCoordinates(int queryXCoordinate, int queryYCoordinate) {
