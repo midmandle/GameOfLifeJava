@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,5 +57,20 @@ public class Cell {
     @Override
     public int hashCode() {
         return Objects.hash(coordinateX, coordinateY);
+    }
+
+    public List<Cell> determineNeighbours() {
+        return new ArrayList<Cell>(){
+            {
+                add(determineBottomLeftNeighbour());
+                add(determineBottomNeighbour());
+                add(determineBottomRightNeighbour());
+                add(determineLeftNeighbour());
+                add(determineRightNeighbour());
+                add(determineTopLeftNeighbour());
+                add(determineTopNeighbour());
+                add(determineTopRightNeighbour());
+            }
+        };
     }
 }

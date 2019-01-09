@@ -1,20 +1,29 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class GameOfLife {
     public List<Cell> runCycle(List<Cell> seedCells) {
         List<Cell> resultCells = new ArrayList<Cell>();
         for(Cell c: seedCells) {
-            if (isLivingCell(c.determineLeftNeighbour(), seedCells) && isLivingCell(c.determineRightNeighbour(), seedCells))
+            List<Cell> cellNeighbours = c.determineNeighbours();
+            if (determineLivingNeighbours(cellNeighbours, seedCells).size() == 3)
                 resultCells.add(c);
-            if (isLivingCell(c.determineTopNeighbour(), seedCells) && isLivingCell(c.determineBottomNeighbour(), seedCells))
-                resultCells.add(c);
-            if (isLivingCell(c.determineTopRightNeighbour(), seedCells) && isLivingCell(c.determineBottomLeftNeighbour(), seedCells))
-                resultCells.add(c);
-            if (isLivingCell(c.determineBottomRightNeighbour(), seedCells) && isLivingCell(c.determineTopLeftNeighbour(), seedCells))
+            if (determineLivingNeighbours(cellNeighbours, seedCells).size() == 2)
                 resultCells.add(c);
         }
         return resultCells;
+    }
+
+    private List<Cell> determineLivingNeighbours(List<Cell> cellNeighbours, List<Cell> livingCells) {
+        List<Cell> livingNeighbours = new ArrayList<Cell>();
+
+        for (Cell c: cellNeighbours) {
+            if (isLivingCell(c, livingCells))
+                livingNeighbours.add(c);
+        }
+
+        return livingNeighbours;
     }
 
     public boolean isLivingCell(Cell cellToCheck, List<Cell> livingCells) {
