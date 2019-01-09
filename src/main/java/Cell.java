@@ -32,6 +32,28 @@ public class Cell {
         return false;
     }
 
+    public boolean hasTopNeighbour(List<Cell> livingCells) {
+        int topSideXCoordinate = this.coordinateX;
+        int topSideYCoordinate = this.coordinateY + 1;
+
+        for (Cell c : livingCells) {
+            if (c.hasCoordinates(topSideXCoordinate, topSideYCoordinate))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasBottomNeighbour(List<Cell> livingCells) {
+        int bottomSideXCoordinate = this.coordinateX;
+        int bottomSideYCoordinate = this.coordinateY - 1;
+
+        for (Cell c : livingCells) {
+            if (c.hasCoordinates(bottomSideXCoordinate, bottomSideYCoordinate))
+                return true;
+        }
+        return false;
+    }
+
     private boolean hasCoordinates(int queryXCoordinate, int queryYCoordinate) {
         if ((this.coordinateX == queryXCoordinate) && (this.coordinateY == queryYCoordinate))
             return true;

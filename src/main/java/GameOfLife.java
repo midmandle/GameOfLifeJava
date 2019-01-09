@@ -7,6 +7,8 @@ public class GameOfLife {
         for(Cell c: seedCells) {
             if (c.hasLeftNeighbour(seedCells) && c.hasRightNeighbour(seedCells))
                 resultCells.add(c);
+            if (c.hasTopNeighbour(seedCells) && c.hasBottomNeighbour(seedCells))
+                resultCells.add(c);
         }
         return resultCells;
     }
