@@ -28,6 +28,10 @@ public class ThreeLivingCellsTests {
                         asList(new Cell(1, 0), new Cell(1,1), new Cell(1, 2)),
                         asList(new Cell(1,1))
                 },
+                new Object[]{
+                        asList(new Cell(0, 0), new Cell(1,1), new Cell(2, 2)),
+                        asList(new Cell(1,1))
+                },
         };
     }
 }

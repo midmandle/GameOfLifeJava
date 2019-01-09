@@ -54,6 +54,28 @@ public class Cell {
         return false;
     }
 
+    public boolean hasTopRightNeighbour(List<Cell> livingCells) {
+        int topRightCornerXCoordinate = this.coordinateX + 1;
+        int topRightCornerYCoordinate = this.coordinateY + 1;
+
+        for (Cell c : livingCells) {
+            if (c.hasCoordinates(topRightCornerXCoordinate, topRightCornerYCoordinate))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasBottomLeftNeighbour(List<Cell> livingCells) {
+        int bottomLeftCornerXCoordinate = this.coordinateX - 1;
+        int bottomLeftCornerYCoordinate = this.coordinateY - 1;
+
+        for (Cell c : livingCells) {
+            if (c.hasCoordinates(bottomLeftCornerXCoordinate, bottomLeftCornerYCoordinate))
+                return true;
+        }
+        return false;
+    }
+
     private boolean hasCoordinates(int queryXCoordinate, int queryYCoordinate) {
         if ((this.coordinateX == queryXCoordinate) && (this.coordinateY == queryYCoordinate))
             return true;

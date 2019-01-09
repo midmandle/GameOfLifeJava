@@ -9,6 +9,8 @@ public class GameOfLife {
                 resultCells.add(c);
             if (c.hasTopNeighbour(seedCells) && c.hasBottomNeighbour(seedCells))
                 resultCells.add(c);
+            if (c.hasTopRightNeighbour(seedCells) && c.hasBottomLeftNeighbour(seedCells))
+                resultCells.add(c);
         }
         return resultCells;
     }
