@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 public class FiveLivingCells {
     @Test
     @Parameters(method = "cellValues")
-    public void cells_with_four_neighbours_die(List<Cell> seedCells, List<Cell> resultCells) {
+    public void cells_with_four_neighbours_die_and_dead_cells_with_3_neighbours_are_born(List<Cell> seedCells, List<Cell> resultCells) {
         GameOfLife gameOfLife = new GameOfLife();
         assertTrue(resultCells.containsAll(gameOfLife.runCycle(seedCells)));
     }

@@ -15,7 +15,7 @@ public class FourLivingCellsTests {
 
     @Test
     @Parameters(method = "survivorCellValues")
-    public void cells_with_three_neighbours_survive(List<Cell> seedCells, List<Cell> resultCells) {
+    public void cells_with_three_neighbours_survive_and_dead_cells_with_three_neighbours_are_born(List<Cell> seedCells, List<Cell> resultCells) {
         GameOfLife gameOfLife = new GameOfLife();
         System.out.println("EXPECTED");
         for (Cell c :
