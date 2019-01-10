@@ -22,11 +22,7 @@ public class FourLivingCellsTests {
         return new Object[] {
                 new Object[]{
                         asList(new Cell(0, 0), new Cell(0, 2), new Cell(1, 1), new Cell(2, 0)),
-                        asList(new Cell(1,1))
-                },
-                new Object[]{
-                        asList(new Cell(0, 0), new Cell(0, 1), new Cell(1, 1), new Cell(2, 0)),
-                        asList(new Cell(0, 0), new Cell(0, 1), new Cell(1,1))
+                        asList(new Cell(0, 1), new Cell(1, 1), new Cell(1, 0))
                 },
                 new Object[]{
                         asList(new Cell(0, 0), new Cell(0, 1), new Cell(1, 0), new Cell(1, 1)),
