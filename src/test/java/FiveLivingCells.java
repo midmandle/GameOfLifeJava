@@ -7,6 +7,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JUnitParamsRunner.class)
 public class FiveLivingCells {
@@ -14,7 +15,7 @@ public class FiveLivingCells {
     @Parameters(method = "cellValues")
     public void cells_with_four_neighbours_die(List<Cell> seedCells, List<Cell> resultCells) {
         GameOfLife gameOfLife = new GameOfLife();
-        assertEquals(resultCells, gameOfLife.runCycle(seedCells));
+        assertTrue(resultCells.containsAll(gameOfLife.runCycle(seedCells)));
     }
 
 

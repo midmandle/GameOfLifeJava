@@ -1,10 +1,9 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class GameOfLife {
     public List<Cell> runCycle(List<Cell> seedCells) {
         List<Cell> resultCells = new ArrayList<Cell>();
+        Map<Cell, Integer> commonNeighbours = identifyCommonNeighbours(seedCells);
         for(Cell c: seedCells) {
             List<Cell> cellNeighbours = c.determineNeighbours();
             if (determineLivingNeighbours(cellNeighbours, seedCells).size() == 3)
@@ -12,7 +11,29 @@ public class GameOfLife {
             if (determineLivingNeighbours(cellNeighbours, seedCells).size() == 2)
                 resultCells.add(c);
         }
+
+        for (Cell c : commonNeighbours.keySet()) {
+            if (commonNeighbours.get(c) == 3 && !resultCells.contains(c)) {
+                resultCells.add(c);
+            }
+        }
         return resultCells;
+    }
+
+    private Map<Cell, Integer> identifyCommonNeighbours(List<Cell> seedCells) {
+        Map<Cell, Integer> commonNeighbours = new HashMap<>();
+        for (Cell c : seedCells) {
+            List<Cell> neighbours = c.determineNeighbours();
+            for (Cell n : neighbours) {
+                if(commonNeighbours.containsKey(n)) {
+                    Integer neighbourCount = commonNeighbours.get(n);
+                    commonNeighbours.put(n, neighbourCount + 1);
+                } else {
+                    commonNeighbours.put(n, 1);
+                }
+            }
+        }
+        return commonNeighbours;
     }
 
     private List<Cell> determineLivingNeighbours(List<Cell> cellNeighbours, List<Cell> livingCells) {

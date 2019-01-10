@@ -12,6 +12,9 @@ public class Cell {
         this.coordinateY = coordinateY;
     }
 
+    public void printCoordinates() {
+        System.out.println(this.coordinateX + " " + this.coordinateY);
+    }
 
     public Cell determineLeftNeighbour() {
         return new Cell(this.coordinateX -1, this.coordinateY);
