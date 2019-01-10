@@ -2,22 +2,25 @@ import java.util.*;
 
 public class GameOfLife {
     public List<Cell> runCycle(List<Cell> seedCells) {
-        List<Cell> resultCells = new ArrayList<Cell>();
-        Map<Cell, Integer> commonNeighbours = identifyCommonNeighbours(seedCells);
-        for(Cell c: seedCells) {
-            List<Cell> cellNeighbours = c.determineNeighbours();
-            if (determineLivingNeighbours(cellNeighbours, seedCells).size() == 3)
-                resultCells.add(c);
-            if (determineLivingNeighbours(cellNeighbours, seedCells).size() == 2)
-                resultCells.add(c);
-        }
+        return generateCycleOutput(seedCells);
+    }
 
+    private List<Cell> generateCycleOutput(List<Cell> seedCells) {
+        List<Cell> births = identifyBirths(seedCells);
+        List<Cell> survivors = extractSurvivors(seedCells);
+
+        return mergeSurvivorsAndBirths(survivors, births);
+    }
+
+    private List<Cell> identifyBirths(List<Cell> seedCells){
+        List<Cell> births = new ArrayList<Cell>();
+        Map<Cell, Integer> commonNeighbours = identifyCommonNeighbours(seedCells);
         for (Cell c : commonNeighbours.keySet()) {
-            if (commonNeighbours.get(c) == 3 && !resultCells.contains(c)) {
-                resultCells.add(c);
+            if (commonNeighbours.get(c) == 3) {
+                births.add(c);
             }
         }
-        return resultCells;
+        return births;
     }
 
     private Map<Cell, Integer> identifyCommonNeighbours(List<Cell> seedCells) {
@@ -36,22 +39,48 @@ public class GameOfLife {
         return commonNeighbours;
     }
 
-    private List<Cell> determineLivingNeighbours(List<Cell> cellNeighbours, List<Cell> livingCells) {
-        List<Cell> livingNeighbours = new ArrayList<Cell>();
+    private List<Cell> extractSurvivors(List<Cell> seedCells) {
+        List<Cell> survivors = new ArrayList<Cell>();
+        for(Cell c: seedCells) {
+            if (determineNumberOfLivingNeighbours(c, seedCells) == 3)
+                survivors.add(c);
+            if (determineNumberOfLivingNeighbours(c, seedCells) == 2)
+                survivors.add(c);
+        }
+        return survivors;
+    }
+
+    private Integer determineNumberOfLivingNeighbours(Cell cellWithNeighbours, List<Cell> livingCells) {
+        Integer numberOfLivingNeighbours = 0;
+        List<Cell> cellNeighbours = cellWithNeighbours.determineNeighbours();
 
         for (Cell c: cellNeighbours) {
-            if (isLivingCell(c, livingCells))
-                livingNeighbours.add(c);
+            numberOfLivingNeighbours += countIfLiving(c, livingCells);
         }
 
-        return livingNeighbours;
+        return numberOfLivingNeighbours;
+    }
+
+    private Integer countIfLiving(Cell cellToCheck, List<Cell> livingCells){
+        if (isLivingCell(cellToCheck, livingCells))
+            return 1;
+        return 0;
     }
 
     public boolean isLivingCell(Cell cellToCheck, List<Cell> livingCells) {
-        for (Cell c : livingCells) {
-            if (c.equals(cellToCheck))
-                return true;
+        return livingCells.contains(cellToCheck);
+    }
+
+    private List<Cell> mergeSurvivorsAndBirths(List<Cell> resultCells, List<Cell> births) {
+        for (Cell c : births) {
+            resultCells = addCellToListIfNotExists(resultCells, c);
         }
-        return false;
+        return resultCells;
+    }
+
+    private List<Cell> addCellToListIfNotExists(List<Cell> resultCells, Cell c) {
+        if (!resultCells.contains(c))
+            resultCells.add(c);
+        return resultCells;
     }
 }
