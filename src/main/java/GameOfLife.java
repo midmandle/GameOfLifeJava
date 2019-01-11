@@ -20,12 +20,13 @@ public class GameOfLife {
         List<Cell> births = new ArrayList<Cell>();
         Map<Cell, Integer> commonNeighbours = identifyCommonNeighbours();
         for (Cell c : commonNeighbours.keySet()) {
-            if (commonNeighbours.get(c) == 3) {
+            if (isToBeBorn(c, commonNeighbours)) {
                 births.add(c);
             }
         }
         return births;
     }
+
 
     private Map<Cell, Integer> identifyCommonNeighbours() {
         Map<Cell, Integer> commonNeighbours = new HashMap<>();
@@ -53,6 +54,9 @@ public class GameOfLife {
         return commonNeighbours;
     }
 
+    private boolean isToBeBorn(Cell queryCell, Map<Cell, Integer> commonNeighbours) {
+        return commonNeighbours.get(queryCell) == 3;
+    }
 
     private List<Cell> extractSurvivors() {
         List<Cell> survivors = new ArrayList<Cell>();
