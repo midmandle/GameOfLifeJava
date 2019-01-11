@@ -1,20 +1,24 @@
 import java.util.*;
 
 public class GameOfLife {
+
+    private List<Cell> seedCells;
+
     public List<Cell> runCycle(List<Cell> seedCells) {
-        return generateCycleOutput(seedCells);
+        this.seedCells = seedCells;
+        return generateCycleOutput();
     }
 
-    private List<Cell> generateCycleOutput(List<Cell> seedCells) {
-        List<Cell> births = identifyBirths(seedCells);
-        List<Cell> survivors = extractSurvivors(seedCells);
+    private List<Cell> generateCycleOutput() {
+        List<Cell> births = identifyBirths();
+        List<Cell> survivors = extractSurvivors();
 
         return mergeSurvivorsAndBirths(survivors, births);
     }
 
-    private List<Cell> identifyBirths(List<Cell> seedCells){
+    private List<Cell> identifyBirths(){
         List<Cell> births = new ArrayList<Cell>();
-        Map<Cell, Integer> commonNeighbours = identifyCommonNeighbours(seedCells);
+        Map<Cell, Integer> commonNeighbours = identifyCommonNeighbours();
         for (Cell c : commonNeighbours.keySet()) {
             if (commonNeighbours.get(c) == 3) {
                 births.add(c);
@@ -23,9 +27,9 @@ public class GameOfLife {
         return births;
     }
 
-    private Map<Cell, Integer> identifyCommonNeighbours(List<Cell> seedCells) {
+    private Map<Cell, Integer> identifyCommonNeighbours() {
         Map<Cell, Integer> commonNeighbours = new HashMap<>();
-        for (Cell c : seedCells) {
+        for (Cell c : this.seedCells) {
             commonNeighbours = populateCommonNeighbourMap(commonNeighbours, c);
         }
         return commonNeighbours;
@@ -50,46 +54,46 @@ public class GameOfLife {
     }
 
 
-    private List<Cell> extractSurvivors(List<Cell> seedCells) {
+    private List<Cell> extractSurvivors() {
         List<Cell> survivors = new ArrayList<Cell>();
-        for(Cell c: seedCells) {
-            if(isSurvivor(c, seedCells))
+        for(Cell c: this.seedCells) {
+            if(isSurvivor(c))
                 survivors.add(c);
         }
         return survivors;
     }
 
-    private boolean isSurvivor(Cell queryCell, List<Cell> seedCells) {
-        return hasTwoLivingNeighbours(queryCell, seedCells) || hasThreeLivingNeighbours(queryCell, seedCells);
+    private boolean isSurvivor(Cell queryCell) {
+        return hasTwoLivingNeighbours(queryCell) || hasThreeLivingNeighbours(queryCell);
     }
 
-    private boolean hasTwoLivingNeighbours(Cell queryCell, List<Cell> seedCells) {
-        return determineNumberOfLivingNeighbours(queryCell, seedCells) == 2;
+    private boolean hasTwoLivingNeighbours(Cell queryCell) {
+        return determineNumberOfLivingNeighbours(queryCell) == 2;
     }
 
-    private boolean hasThreeLivingNeighbours(Cell queryCell, List<Cell> seedCells) {
-        return determineNumberOfLivingNeighbours(queryCell, seedCells) == 3;
+    private boolean hasThreeLivingNeighbours(Cell queryCell) {
+        return determineNumberOfLivingNeighbours(queryCell) == 3;
     }
 
-    private Integer determineNumberOfLivingNeighbours(Cell cellWithNeighbours, List<Cell> livingCells) {
+    private Integer determineNumberOfLivingNeighbours(Cell cellWithNeighbours) {
         Integer numberOfLivingNeighbours = 0;
         List<Cell> cellNeighbours = cellWithNeighbours.determineNeighbours();
 
         for (Cell c: cellNeighbours) {
-            numberOfLivingNeighbours += countIfLiving(c, livingCells);
+            numberOfLivingNeighbours += countIfLiving(c);
         }
 
         return numberOfLivingNeighbours;
     }
 
-    private Integer countIfLiving(Cell cellToCheck, List<Cell> livingCells){
-        if (isLivingCell(cellToCheck, livingCells))
+    private Integer countIfLiving(Cell cellToCheck){
+        if (isLivingCell(cellToCheck))
             return 1;
         return 0;
     }
 
-    private boolean isLivingCell(Cell cellToCheck, List<Cell> livingCells) {
-        return livingCells.contains(cellToCheck);
+    private boolean isLivingCell(Cell cellToCheck) {
+        return this.seedCells.contains(cellToCheck);
     }
 
     private List<Cell> mergeSurvivorsAndBirths(List<Cell> resultCells, List<Cell> births) {
