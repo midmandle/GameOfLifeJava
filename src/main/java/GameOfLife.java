@@ -26,28 +26,49 @@ public class GameOfLife {
     private Map<Cell, Integer> identifyCommonNeighbours(List<Cell> seedCells) {
         Map<Cell, Integer> commonNeighbours = new HashMap<>();
         for (Cell c : seedCells) {
-            List<Cell> neighbours = c.determineNeighbours();
-            for (Cell n : neighbours) {
-                if(commonNeighbours.containsKey(n)) {
-                    Integer neighbourCount = commonNeighbours.get(n);
-                    commonNeighbours.put(n, neighbourCount + 1);
-                } else {
-                    commonNeighbours.put(n, 1);
-                }
-            }
+            commonNeighbours = populateCommonNeighbourMap(commonNeighbours, c);
         }
         return commonNeighbours;
     }
 
+    private Map<Cell, Integer> populateCommonNeighbourMap(Map<Cell, Integer> commonNeighbours, Cell cellToMap) {
+        List<Cell> neighbours = cellToMap.determineNeighbours();
+        for (Cell n : neighbours) {
+            commonNeighbours = incrementOrInitialiseNeighbourOnMap(commonNeighbours, n);
+        }
+        return commonNeighbours;
+    }
+
+    private Map<Cell, Integer> incrementOrInitialiseNeighbourOnMap(Map<Cell, Integer> commonNeighbours, Cell neighbourToMap) {
+        if(commonNeighbours.containsKey(neighbourToMap)) {
+            Integer neighbourCount = commonNeighbours.get(neighbourToMap);
+            commonNeighbours.put(neighbourToMap, neighbourCount + 1);
+        } else {
+            commonNeighbours.put(neighbourToMap, 1);
+        }
+        return commonNeighbours;
+    }
+
+
     private List<Cell> extractSurvivors(List<Cell> seedCells) {
         List<Cell> survivors = new ArrayList<Cell>();
         for(Cell c: seedCells) {
-            if (determineNumberOfLivingNeighbours(c, seedCells) == 3)
-                survivors.add(c);
-            if (determineNumberOfLivingNeighbours(c, seedCells) == 2)
+            if(isSurvivor(c, seedCells))
                 survivors.add(c);
         }
         return survivors;
+    }
+
+    private boolean isSurvivor(Cell queryCell, List<Cell> seedCells) {
+        return hasTwoLivingNeighbours(queryCell, seedCells) || hasThreeLivingNeighbours(queryCell, seedCells);
+    }
+
+    private boolean hasTwoLivingNeighbours(Cell queryCell, List<Cell> seedCells) {
+        return determineNumberOfLivingNeighbours(queryCell, seedCells) == 2;
+    }
+
+    private boolean hasThreeLivingNeighbours(Cell queryCell, List<Cell> seedCells) {
+        return determineNumberOfLivingNeighbours(queryCell, seedCells) == 3;
     }
 
     private Integer determineNumberOfLivingNeighbours(Cell cellWithNeighbours, List<Cell> livingCells) {
@@ -67,7 +88,7 @@ public class GameOfLife {
         return 0;
     }
 
-    public boolean isLivingCell(Cell cellToCheck, List<Cell> livingCells) {
+    private boolean isLivingCell(Cell cellToCheck, List<Cell> livingCells) {
         return livingCells.contains(cellToCheck);
     }
 
